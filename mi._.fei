@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心網·米妃 • 數位敘事與系統思維</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- ROSE & FOREST GREEN THEME --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
+
+        /* NEW COLOR DEFINITIONS (Based on original warm palette) */
+        :root {
+            --color-rose: #ddadb8; /* Warm Rose - Primary Accent */
+            --color-green: #234d44; /* Deep Forest Green - Secondary/Text */
+            --color-light-bg: #f7f7f5; /* Off-White Background */
+            --color-mid-bg: #EAE5E0; /* Mid-Tone Background for sections */
+            --color-dark-text: #1a1a1a;
+        }
+
+        body {
+            background-color: var(--color-light-bg); 
+            color: var(--color-dark-text); 
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+        }
+        
+        /* Utility Classes based on Variables */
+        .text-rose { color: var(--color-rose); }
+        .text-green { color: var(--color-green); }
+        .bg-green { background-color: var(--color-green); }
+        .bg-mid { background-color: var(--color-mid-bg); }
+
+        /* --- Warm CTA Button --- */
+        .cta-warm {
+            background-color: var(--color-rose); 
+            color: white; 
+            border: 2px solid var(--color-rose);
+            box-shadow: 0 4px 10px rgba(221, 173, 184, 0.4);
+            transition: all 0.3s ease;
+        }
+        .cta-warm:hover {
+            background-color: #c79ba5; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(221, 173, 184, 0.6);
+        }
+
+        /* --- Navigation Style (UPDATED FOR HOVER UNDERLINE) --- */
+        nav {
+            background-color: var(--color-light-bg);
+            border-bottom: 1px solid rgba(35, 77, 68, 0.1); /* Subtle green line */
+        }
+        
+        .nav-link {
+            transition: color 0.3s;
+            position: relative;
+            color: var(--color-dark-text);
+        }
+
+        /* Base underline style (initially hidden/scaled down) */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-green); /* Green underline */
+            border-radius: 2px;
+            transform: scaleX(0); /* Start scaled down (hidden) */
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        /* Hover state: Show underline and change text color to rose */
+        .nav-link:hover {
+            color: var(--color-rose); 
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1); /* Expand the line to full width */
+            opacity: 1;
+        }
+        
+        /* Active state: Keep underline visible (overrides hover text color change if needed) */
+        .nav-link.active::after {
+            transform: scaleX(1); /* Keep the line expanded */
+            opacity: 1;
+        }
+        /* --- END Navigation Style UPDATED --- */
+        
+        /* Section Header - Rose Underline */
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--color-rose); 
+            border-radius: 1px;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Card Hover Effect */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--color-mid-bg);
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--color-rose);
+        }
+
+        /* Scroll Reveal Adaptation (Re-using the script) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px); 
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            transition-delay: 0.2s;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <!-- Brand Name -->
+                    <span class="text-3xl font-bold text-rose">心網·米妃</span>
+                </div>
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8 font-medium text-lg">
+                    <a href="#home" class="nav-link active">首頁</a>
+                    <a href="#about" class="nav-link">關於米妃</a> <!-- UPDATED -->
+                    <a href="#books" class="nav-link">著作書籍</a> <!-- UPDATED: Simplified link text -->
+                    <a href="#journal" class="nav-link">研讀日誌</a>
+                    <a href="#anling" class="nav-link">安聆療癒音樂</a>
+                    <a href="#contact" class="px-5 py-2 text-base rounded-full cta-warm font-semibold">
+                        廠商合作 / 諮詢
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-[80vh] flex items-center justify-center bg-mid">
+        <div class="text-center z-10 px-4 max-w-4xl py-20">
+            <!-- Updated H1 Title - More narrative focused -->
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 text-green">
+                重寫您的生命故事
+            </h1>
+            <!-- UPDATED TEXT CONTENT START -->
+            <p class="mt-4 mx-auto text-xl text-gray-700 max-w-3xl">
+                我是心網·米妃，<br>
+                一位資訊管理背景出身、正走在諮商心理路上的學習者。<br>
+                帶著一份對生命的使命與熱情，<br>
+                相信每個人都有能力觸碰內在陰影，重寫生命藍圖。<br>
+                陪伴您理解內在複雜的情緒網絡，找到新的出口。
+            </p>
+            <!-- UPDATED TEXT CONTENT END -->
+            <div class="mt-12 flex justify-center gap-6 z-20">
+                <a href="#contact" class="cta-warm px-10 py-3 font-bold rounded-full text-lg">
+                    探索您的生命藍圖
+                </a>
+            </div>
+            
+             <!-- Small, friendly tagline -->
+            <div class="mt-10 text-base text-gray-500 italic">
+                <span>您的故事，值得被溫柔地重寫。</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-16 text-center section-header text-green">
+                關於米妃 • 歷程 <!-- UPDATED -->
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center p-8 rounded-xl bg-mid shadow-lg hover-lift">
+                <div class="relative">
+                    <!-- Placeholder Image - warm tone -->
+                    <div class="w-full h-96 bg-gray-300 rounded-xl flex items-center justify-center text-gray-600 font-medium overflow-hidden shadow-inner border border-rose/50">
+                         [米妃專業形象照]
+                    </div>
+                </div>
+                <div>
+                    <!-- Updated Section Title -->
+                    <h3 class="text-2xl text-rose font-bold mb-4">跨界融合：系統與心輔</h3>
+                    <!-- Updated Background Description -->
+                    <p class="text-gray-700 mb-6">
+                        我的背景結合了對邏輯結構的深度理解（資訊管理）與對人類情感的細緻關懷（心輔領域）。這種獨特的視角，使我能夠幫助您不僅看見問題的「流程」，更能感受其「意義」。
+                    </p>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start pl-3">
+                            <i class="fas fa-desktop text-green mt-1 mr-3 flex-shrink-0"></i>
+                            <span class="font-semibold">系統化分析：</span>
+                            <span class="ml-1">以清晰的步驟解構複雜的情緒與人際困境。</span>
+                        </li>
+                        <li class="flex items-start pl-3">
+                            <i class="fas fa-heart text-rose mt-1 mr-3 flex-shrink-0"></i>
+                            <span class="font-semibold">溫和敘事：</span>
+                            <!-- Enhanced with '溫暖的' -->
+                            <span class="ml-1">運用溫暖的敘事取向，重塑對自我與世界的理解。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books/Publications Section - UPDATED TO SHOW ONLY ONE BOOK -->
+    <section id="books" class="py-24 bg-mid reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-16 text-center section-header text-green">
+                著作書籍 <!-- UPDATED: Simplified section header -->
+            </h2>
+            
+            <div class="flex justify-center"> <!-- Center the single book card -->
+                
+                <!-- Single Book: 影子的重量 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center hover-lift border-t-4 border-rose/50 w-full max-w-sm">
+                    <div class="w-32 h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center text-xs text-gray-500 font-medium overflow-hidden border border-gray-300">
+                                            </div>
+                    <h3 class="text-xl font-bold text-rose mb-2">影子的重量</h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        **標籤：** #自我認同 #童年陰影 #敘事療癒
+                    </p>
+                    <p class="text-xs text-gray-600 line-clamp-3">
+                        這是一本關於正視並擁抱內心陰影的療癒之作。透過文字，帶領讀者了解過去的經驗如何影響現在的自我，並找到與「影子」和平共處的力量。
+                    </p>
+                    <a href="#" class="mt-4 text-sm font-medium text-green hover:text-rose transition">立即購買</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <!-- New Section: Study Log -->
+    <section id="journal" class="py-24 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-16 text-center section-header text-green">
+                頂尖期刊研讀日誌
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Log Entry 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover-lift">
+                    <h3 class="text-xl font-bold text-green mb-2">日誌 (2024.10.25)</h3>
+                    <p class="text-sm text-rose mb-3">
+                        主題：系統家庭理論應用
+                    </p>
+                    <p class="text-sm text-gray-600 line-clamp-3">
+                        本次研讀深入探討了 Bowen 家庭系統理論中「情緒三角化」的概念，並思考如何將其結構化的觀點，轉化為溫和的語彙，引導個案看見家庭關係中的隱藏模式。
+                    </p>
+                    <a href="#" class="mt-4 text-sm font-medium text-rose hover:text-green transition block">閱讀日誌</a>
+                </div>
+
+                <!-- Log Entry 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover-lift">
+                    <h3 class="text-xl font-bold text-green mb-2">日誌 (2024.09.18)</h3>
+                    <p class="text-sm text-rose mb-3">
+                        主題：敘事治療的「外化」技巧
+                    </p>
+                    <p class="text-sm text-gray-600 line-clamp-3">
+                        針對敘事治療中如何協助個案將問題「外化」為獨立實體，進行反思與練習。目的是讓個案從被動的受害者，轉變為能夠與問題對話的主動者。
+                    </p>
+                    <a href="#" class="mt-4 text-sm font-medium text-rose hover:text-green transition block">閱讀日誌</a>
+                </div>
+
+                <!-- Log Entry 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover-lift">
+                    <h3 class="text-xl font-bold text-green mb-2">日誌 (2024.08.01)</h3>
+                    <p class="text-sm text-rose mb-3">
+                        主題：數位產品設計與心理健康
+                    </p>
+                    <p class="text-sm text-gray-600 line-clamp-3">
+                        結合資訊管理的背景，分析了幾個成功的數位健康應用程式（App）如何巧妙地運用設計心理學，在不造成壓力的情況下，鼓勵用戶維持積極的行為改變。
+                    </p>
+                    <a href="#" class="mt-4 text-sm font-medium text-rose hover:text-green transition block">閱讀日誌</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- An Ling Lofi Music Section -->
+    <section id="anling" class="py-24 bg-mid reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-16 text-center section-header text-green">
+                安聆 | 療癒音樂
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-white p-8 rounded-xl shadow-2xl border border-rose/50 hover-lift">
+                
+                <!-- Music Description Card -->
+                <div>
+                    <h3 class="text-2xl text-rose font-bold mb-4">Lofi 舒緩節拍</h3>
+                    <p class="text-gray-700 mb-4">
+                        「安聆」是專為緩解焦慮和提升專注力設計的 Lofi 舒緩音頻。柔和的節拍和環境音，能幫助您的心靈進入平靜的背景運算狀態。
+                    </p>
+                    <ul class="space-y-3 text-gray-700 text-sm">
+                        <li class="flex items-start pl-3 border-l-2 border-rose">
+                            <i class="fas fa-feather-alt text-rose mt-1 mr-3 flex-shrink-0"></i>
+                            <span>專注模式：輕快而穩定的音頻，適合工作與學習。</span>
+                        </li>
+                        <li class="flex items-start pl-3 border-l-2 border-rose">
+                            <i class="fas fa-moon text-rose mt-1 mr-3 flex-shrink-0"></i>
+                            <span>放鬆模式：低頻率的慢板節拍，有助於舒眠與深度放鬆。</span>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                         <a href="#" class="inline-flex items-center space-x-2 px-8 py-3 rounded-full font-semibold transition duration-300 bg-green text-white hover:bg-[#1a3a33]">
+                            <i class="fas fa-headphones-alt"></i>
+                            <span>開始播放</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Music Placeholder/Embed -->
+                <div class="relative w-full aspect-video bg-gray-300 rounded-xl shadow-inner shadow-gray-500 overflow-hidden border-2 border-green/50 flex items-center justify-center text-gray-600 font-medium">
+                                        </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 reveal">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4 text-rose">
+                聯繫我 • 合作與諮詢
+            </h2>
+            <p class="text-lg text-gray-700 mb-10">
+                請填寫以下表單，我將會盡快與您聯繫，討論合作提案或諮詢需求。
+            </p>
+            <div class="max-w-md mx-auto bg-white p-8 rounded-xl border border-green/20 shadow-xl">
+                <form class="space-y-4">
+                    <input type="text" placeholder="您的姓名 / 單位名稱" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose focus:border-rose transition" required>
+                    <input type="email" placeholder="您的電子郵件" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose focus:border-rose transition" required>
+                    <textarea placeholder="您的需求說明 (合作或諮詢主題)" rows="4" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose focus:border-rose transition" required></textarea>
+                    <button type="submit" class="cta-warm w-full py-3 font-bold rounded-full text-lg">
+                        送出聯繫請求
+                    </button>
+                </form>
+            </div>
+             <!-- Social Links in Contact Section -->
+            <div class="mt-12">
+                <h3 class="text-xl font-bold text-green mb-4">社群連結</h3>
+                <div class="flex justify-center space-x-8 text-gray-500">
+                    <a href="#" class="hover:text-rose transition" title="Instagram"><i class="fab fa-instagram text-3xl"></i></a>
+                    <a href="#" class="hover:text-rose transition" title="Facebook"><i class="fab fa-facebook text-3xl"></i></a>
+                    <a href="#" class="hover:text-rose transition" title="YouTube"><i class="fab fa-youtube text-3xl"></i></a>
+                    <a href="#" class="hover:text-rose transition" title="LINE"><i class="fab fa-line text-3xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 text-center text-sm bg-green text-gray-200">
+        <!-- Footer Name Updated -->
+        <p>&copy; 2024 心網·米妃 版權所有。</p>
+        <!-- The legal statement has been removed as requested -->
+    </footer>
+
+    <!-- Intersection Observer Script for Scroll Reveal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.reveal');
+
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
